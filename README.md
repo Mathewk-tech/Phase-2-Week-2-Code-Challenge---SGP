@@ -1,28 +1,12 @@
-## Code challenge
-This is a codechallenge submission for phase-2 react module. The project is about creating a simple SMART GOAL PLANNER,which allows the user to do the following.
+# React + Vite
 
-- To enter their goal.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-- To enter amount.
+Currently, two official plugins are available:
 
-- To enter the date.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### Project setup
-The required tools are:
+## Expanding the ESLint configuration
 
-- visual studio code
--Json-server
-- node version 18
-- livesever extension
--react
-
-### How to run:
-
-- clone the project using
-```
-https://github.com/Mathewk-tech/Phase-2-Week-2-Code-Challenge---SGP.git
-```
-- Open the folder of the cloned project using vs code.
-- Open the folder of the challenge you want to run.
--Do npm run server to launch the json-server
--Do npm run dev to launch the app
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
