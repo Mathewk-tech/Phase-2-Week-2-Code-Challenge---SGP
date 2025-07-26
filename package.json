@@ -6,7 +6,7 @@
   "homepage": "https://mathewk-tech.github.io/Phase-2-Week-2-Code-Challenge---SGP",
   "scripts": {
      "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
    
