@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+const url="https://phase-2-week-2-code-challenge-sgp.onrender.com"
 function Goal({ setgoals }) {
     const [form, setForm] = useState({
         name: "",
@@ -21,7 +21,7 @@ function Goal({ setgoals }) {
             createdAt: new Date().toISOString().split('T')[0]
         };
 
-        fetch("http://localhost:3001/goals", {
+        fetch(`${url}/goals`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newGoal)
@@ -29,7 +29,7 @@ function Goal({ setgoals }) {
         .then(res => res.json())
         .then(() => {
            
-            fetch("http://localhost:3001/goals")
+            fetch(`${url}/goals`)
                 .then(res => res.json())
                 .then(data => setgoals(data));
         });

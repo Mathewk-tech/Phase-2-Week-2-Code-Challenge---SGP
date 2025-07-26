@@ -1,8 +1,10 @@
+const url="https://phase-2-week-2-code-challenge-sgp.onrender.com"
+
 function Delete({id,setgoals}){
        function handleDelete() {
-        fetch(`http://localhost:3001/goals/${id}`, { method: "DELETE" })
+        fetch(`${url}/goals/${id}`, { method: "DELETE" })
             .then(() => {
-                fetch("http://localhost:3001/goals")
+                fetch(`${url}/goals`)
                     .then(res => res.json())
                     .then(data => setgoals(data));
             });

@@ -2,12 +2,13 @@ import { useState,useEffect } from "react";
 import Goal from "./goal";
 import List from "./list";
 
-
+const url="https://phase-2-week-2-code-challenge-sgp.onrender.com"
 function App(){
   const[goals,setgoals]=useState([]);
+  
 
     useEffect(()=>{
-      fetch("http://localhost:3001/goals")
+      fetch(`${url}/goals`)
       .then(res=> res.json())
       .then(data =>setgoals(data))
     },[])
