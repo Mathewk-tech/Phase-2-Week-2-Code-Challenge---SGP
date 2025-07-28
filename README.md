@@ -18,7 +18,7 @@ The required tools are:
 
 - clone the project using
 ```
-https://github.com/Mathewk-tech/SA-Week-3-Phase-1-Code-Challenge.git
+https://github.com/Mathewk-tech/Phase-2-Week-2-Code-Challenge---SGP.git
 ```
 - Open the folder of the cloned project using vs code.
 - Open the folder of the challenge you want to run.
