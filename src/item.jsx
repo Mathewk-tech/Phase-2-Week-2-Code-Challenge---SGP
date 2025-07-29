@@ -1,80 +1,56 @@
+import { useState } from "react";
 import Delete from "./delete";
 
-function Item({ goal, setgoals }) {
-  const {
-    name,
-    targetAmount,
-    savedAmount,
-    category,
-    deadline
-  } = goal;
+function Item({ goal, onDelete, onUpdate }) {
+    const [editing, setEditing] = useState(false);
+    const [editData, setEditData] = useState(goal);
 
-  const progress = Math.round((savedAmount / targetAmount) * 100);
+    function handleEditChange(e) {
+        setEditData({ ...editData, [e.target.name]: e.target.value });
+    }
 
-  // Deadline calculations
-  const now = new Date();
-  const deadlineDate = new Date(deadline);
-  const msInDay = 1000 * 60 * 60 * 24;
-  const daysLeft = Math.ceil((deadlineDate - now) / msInDay);
+    function handleEditSubmit(e) {
+        e.preventDefault();
+        onUpdate({ ...editData, id: goal.id, targetAmount: Number(editData.targetAmount) });
+        setEditing(false);
+    }
 
-  // Simple if statements
-  let isOverdue = false;
-  if (daysLeft < 0 && savedAmount < targetAmount) {
-    isOverdue = true;
-  }
+    function getDeadlineStatus() {
+        const now = new Date();
+        const deadline = new Date(goal.deadline);
+        const diff = (deadline - now) / (1000 * 60 * 60 * 24);
+        if (goal.savedAmount >= goal.targetAmount) return "✅ Completed";
+        if (diff < 0) return "❌ Overdue";
+        if (diff < 30) return "⚠️ Less than 30 days left!";
+        return "";
+    }
 
-  let isWarning = false;
-  if (daysLeft >= 0 && daysLeft <= 30 && savedAmount < targetAmount) {
-    isWarning = true;
-  }
-
-  // Background color based on status
-  let backgroundColor = "rgba(255,255,255,0.08)";
-  if (isOverdue) {
-    backgroundColor = "#ffe6e6";
-  } else if (isWarning) {
-    backgroundColor = "#fffbe6";
-  }
-
-  return (
-    <div
-      style={{
-        border: '1px solid #888',
-        margin: '10px',
-        padding: '16px',
-        borderRadius: '10px',
-        background: backgroundColor,
-        color: '#fff',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
-      }}
-    >
-      <h3 style={{ color: "red" }}>{name}</h3>
-      <p style={{ color: "black" }}>
-        Target: <span style={{ color: '#ffd700' }}>${targetAmount}</span>
-      </p>
-      <p style={{ color: "black" }}>
-        Saved: <span style={{ color: '#90ee90' }}>${savedAmount}</span>
-      </p>
-      <p style={{ color: "black" }}>
-        Category: <span style={{ color: '#87ceeb' }}>{category}</span>
-      </p>
-      <p style={{ color: "black" }}>
-        Deadline: <span style={{ color: '#ffa500' }}>{deadline}</span>
-        {isOverdue && (
-          <span style={{ color: 'red' }}> (Overdue)</span>
-        )}
-        {isWarning && (
-          <span style={{ color: 'orange' }}> (Less than 30 days left!)</span>
-        )}
-      </p>
-      <p style={{ color: "black" }}>Progress: {progress}%</p>
-      <progress value={savedAmount} max={targetAmount} style={{ width: '100%' }}></progress>
-      <p style={{ color: "black" }}>
-        Remaining: <span style={{ color: '#ffb6c1' }}>${targetAmount - savedAmount}</span>
-      </p>
-      <Delete id={goal.id} setgoals={setgoals} />
-    </div>
-  );
+    return (
+        <div style={{ border: "1px solid #ccc", padding: "10px" }}>
+            {editing ? (
+                <form onSubmit={handleEditSubmit}>
+                    <input name="name" value={editData.name} onChange={handleEditChange} />
+                    <input name="targetAmount" type="number" value={editData.targetAmount} onChange={handleEditChange} />
+                    <input name="category" value={editData.category} onChange={handleEditChange} />
+                    <input name="deadline" type="date" value={editData.deadline} onChange={handleEditChange} />
+                    <button type="submit">Save</button>
+                    <button type="button" onClick={() => setEditing(false)}>Cancel</button>
+                </form>
+            ) : (
+                <>
+                    <h3>{goal.name}</h3>
+                    <p>Category: {goal.category}</p>
+                    <p>Target: ${goal.targetAmount}</p>
+                    <p>Saved: ${goal.savedAmount}</p>
+                    <p>Deadline: {goal.deadline} {getDeadlineStatus()}</p>
+                    <progress value={goal.savedAmount} max={goal.targetAmount} style={{ width: "100%" }}></progress>
+                    <br />
+                    <button onClick={() => setEditing(true)}>Edit</button>
+                    <Delete id={goal.id} onDelete={onDelete} />
+                </>
+            )}
+        </div>
+    );
 }
 
-export default Item;
+export default Item

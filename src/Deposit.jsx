@@ -1,38 +1,20 @@
 import { useState } from "react";
-const url = "https://phase-2-week-2-code-challenge-sgp.onrender.com";
 
-function Deposit({ goals, setgoals }) {
+function DepositForm({ goals, onDeposit }) {
   const [goalId, setGoalId] = useState("");
   const [amount, setAmount] = useState("");
-  const [error, setError] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!goalId || !amount || isNaN(amount) || Number(amount) <= 0) {
-      setError("Please select a goal and enter a valid amount.");
-      return;
+    if (goalId && amount) {
+      onDeposit(goalId, Number(amount));
+      setAmount("");
     }
-    setError("");
-    const goal = goals.find(g => g.id === goalId);
-    if (!goal) return;
-    const newSavedAmount = Number(goal.savedAmount) + Number(amount);
-    fetch(`${url}/goals/${goalId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ savedAmount: newSavedAmount })
-    })
-      .then(res => res.json())
-      .then(() => {
-        fetch(`${url}/goals`)
-          .then(res => res.json())
-          .then(data => setgoals(data));
-        setGoalId("");
-        setAmount("");
-      });
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ margin: "20px 0" }}>
+    <form onSubmit={handleSubmit}>
+      <h2>Make a Deposit</h2>
       <select value={goalId} onChange={e => setGoalId(e.target.value)} required>
         <option value="">Select Goal</option>
         {goals.map(goal => (
@@ -41,16 +23,15 @@ function Deposit({ goals, setgoals }) {
       </select>
       <input
         type="number"
-        min="1"
+        placeholder="Amount"
         value={amount}
         onChange={e => setAmount(e.target.value)}
-        placeholder="Deposit Amount"
         required
+        min="1"
       />
       <button type="submit">Deposit</button>
-      {error && <span style={{ color: "red", marginLeft: 10 }}>{error}</span>}
     </form>
   );
 }
 
-export default Deposit;
+export default DepositForm;
