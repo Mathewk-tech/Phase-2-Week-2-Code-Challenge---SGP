@@ -1,5 +1,5 @@
 import { useState } from "react";
-const url = "https://phase-2-week-2-code-challenge-sgp.onrender.com";
+const url = "https://phase-2-week-2-code-challenge-mg6glpcf0.vercel.app";
 
 function Goal({ setgoals }) {
     const [form, setForm] = useState({

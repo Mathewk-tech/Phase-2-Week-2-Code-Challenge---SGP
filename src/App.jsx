@@ -5,7 +5,7 @@ import DepositForm from "./Deposit";
 import Overview from "./overview";
 import "./App.css";
 
-const url = "https://phase-2-week-2-code-challenge-sgp.onrender.com";
+const url = "https://phase-2-week-2-code-challenge-mg6glpcf0.vercel.app";
 
 function App() {
   const [goals, setgoals] = useState([]);
